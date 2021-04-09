@@ -1,0 +1,948 @@
+fileFormatVersion: 2
+guid: 7abe9bf6138938d4e9ee6ebe4278c402
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 962763988655825191
+    second: Computer Hacking_0
+  - first:
+      213: -6340758740770990845
+    second: Computer Hacking_1
+  - first:
+      213: -8699676274930271712
+    second: Computer Hacking_2
+  - first:
+      213: -6873101321988989600
+    second: Computer Hacking_3
+  - first:
+      213: -7780598104459886912
+    second: Computer Hacking_4
+  - first:
+      213: 763240500374987403
+    second: Computer Hacking_5
+  - first:
+      213: -1103815602980777324
+    second: Computer Hacking_6
+  - first:
+      213: -4840727936188299479
+    second: Computer Hacking_7
+  - first:
+      213: 8980632301254597687
+    second: Computer Hacking_8
+  - first:
+      213: -8967705943627003711
+    second: Computer Hacking_9
+  - first:
+      213: -2006759624519900989
+    second: Computer Hacking_10
+  - first:
+      213: 32161255559628976
+    second: Computer Hacking_11
+  - first:
+      213: 8078769653725298134
+    second: Computer Hacking_12
+  - first:
+      213: -6615545213806579149
+    second: Computer Hacking_13
+  - first:
+      213: -7517686973115536523
+    second: Computer Hacking_14
+  - first:
+      213: 7254091338902591985
+    second: Computer Hacking_15
+  - first:
+      213: 3956750245957553884
+    second: Computer Hacking_16
+  - first:
+      213: -7708368732972188225
+    second: Computer Hacking_17
+  - first:
+      213: -2853780102557354607
+    second: Computer Hacking_18
+  - first:
+      213: 5866651147192661745
+    second: Computer Hacking_19
+  - first:
+      213: 3949588362138212912
+    second: Computer Hacking_20
+  - first:
+      213: -4471900627084853859
+    second: Computer Hacking_21
+  - first:
+      213: 1620615506297425913
+    second: Computer Hacking_22
+  - first:
+      213: -5063192573652905676
+    second: Computer Hacking_23
+  - first:
+      213: 1525454879848249396
+    second: Computer Hacking_24
+  - first:
+      213: 8281352570465464096
+    second: Computer Hacking_25
+  - first:
+      213: -4372071111737639995
+    second: Computer Hacking_26
+  - first:
+      213: 2616604770570273513
+    second: Computer Hacking_27
+  - first:
+      213: 3099749503158807468
+    second: Computer Hacking_28
+  - first:
+      213: -2866647805484040493
+    second: Computer Hacking_29
+  - first:
+      213: 2344774023944353263
+    second: Computer Hacking_30
+  - first:
+      213: -248908461149387029
+    second: Computer Hacking_31
+  - first:
+      213: -7945611164794508958
+    second: Computer Hacking_32
+  - first:
+      213: 3200526984175751950
+    second: Computer Hacking_33
+  - first:
+      213: 5030491927540063208
+    second: Computer Hacking_34
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Computer Hacking_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 323
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7216e5a2fbc6c5d00800000000000000
+      internalID: 962763988655825191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_1
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 323
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30554e125891108a0800000000000000
+      internalID: -6340758740770990845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_2
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 323
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02a33e3558a844780800000000000000
+      internalID: -8699676274930271712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_3
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 323
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06d149d43c6dd90a0800000000000000
+      internalID: -6873101321988989600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_4
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 323
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ce37935f33c50490800000000000000
+      internalID: -7780598104459886912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_5
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 323
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b82ea07f033979a00800000000000000
+      internalID: 763240500374987403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_6
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 259
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4921cceae857ea0f0800000000000000
+      internalID: -1103815602980777324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_7
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 259
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 927cf2dd69742dcb0800000000000000
+      internalID: -4840727936188299479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_8
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 259
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73cddae1f7d91ac70800000000000000
+      internalID: 8980632301254597687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_9
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 259
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c804fb05fe4c8380800000000000000
+      internalID: -8967705943627003711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_10
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 259
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c025e6f0ce8624e0800000000000000
+      internalID: -2006759624519900989
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_11
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 259
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b88925dd72427000800000000000000
+      internalID: 32161255559628976
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_12
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 195
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dd7088623e8d1070800000000000000
+      internalID: 8078769653725298134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_13
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 195
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 332f58fbdacd034a0800000000000000
+      internalID: -6615545213806579149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_14
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 195
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57bedd2478fcba790800000000000000
+      internalID: -7517686973115536523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_15
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 195
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f9d68f83a5bba460800000000000000
+      internalID: 7254091338902591985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_16
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 195
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cde4d3b826339e630800000000000000
+      internalID: 3956750245957553884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_17
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 195
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbdf6716a7f560590800000000000000
+      internalID: -7708368732972188225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_18
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 131
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 195bdffdd165568d0800000000000000
+      internalID: -2853780102557354607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_19
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 131
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f67e81b2288a6150800000000000000
+      internalID: 5866651147192661745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_20
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 131
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03ad34680b1cfc630800000000000000
+      internalID: 3949588362138212912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_21
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 131
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9db2c3a21e90f1c0800000000000000
+      internalID: -4471900627084853859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_22
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 131
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ff095277359d7610800000000000000
+      internalID: 1620615506297425913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_23
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 131
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 431d5022e2debb9b0800000000000000
+      internalID: -5063192573652905676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_24
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 67
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 438bd3a81218b2510800000000000000
+      internalID: 1525454879848249396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_25
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 67
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02fac5e49464de270800000000000000
+      internalID: 8281352570465464096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_26
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 67
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cb7124fc784353c0800000000000000
+      internalID: -4372071111737639995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_27
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 67
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e20f6bec2c005420800000000000000
+      internalID: 2616604770570273513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_28
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 67
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cab697cffb5840b20800000000000000
+      internalID: 3099749503158807468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_29
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 67
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3de78f1520f9738d0800000000000000
+      internalID: -2866647805484040493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_30
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 3
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe534c73d8f4a8020800000000000000
+      internalID: 2344774023944353263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_31
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 3
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be60a97c213bb8cf0800000000000000
+      internalID: -248908461149387029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_32
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 3
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 269ab074eb48bb190800000000000000
+      internalID: -7945611164794508958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_33
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 3
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0319d1c55e8a6c20800000000000000
+      internalID: 3200526984175751950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Computer Hacking_34
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 3
+        width: 54
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ebde7261c5efc540800000000000000
+      internalID: 5030491927540063208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
