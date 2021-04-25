@@ -23,12 +23,12 @@ public class SFXManager : MonoBehaviour
 
     public void sfxDown()
     {
-        index = Mathf.Clamp(index - 1, 0, sprites.Length);
+        index = Mathf.Clamp(index - 1, 0, 10);
         updateUI();
     }
     public void sfxUp()
     {
-        index = Mathf.Clamp(index + 1, 0, sprites.Length);
+        index = Mathf.Clamp(index + 1, 0, 10);
         updateUI();
     }
     private void updateUI()

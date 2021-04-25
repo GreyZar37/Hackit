@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -10,20 +13,202 @@ public class GameManager : MonoBehaviour
     public GameObject gameMenu;
     public GameObject shopMenu;
     public GameObject missionsMenu;
- 
+    public GameObject gamePlayObj;
 
-    // Start is called before the first frame update
+    public TMP_Text responseText;
+   
+    public TMP_InputField writenCodeInput;
+
+    float delay = 0.01f;
+    public string fullText;
+
+    public bool textDone = true;
+    public float delayTextTime;
+    public float delayCurrentTime;
+
+
+    [Header("Options")]
+
+    const string help = "help()";
+    const string leave = "leave()";
+    const string missionInfo = "mission()";
+    const string commands = "commands()";
+    const string commandsHacking = "commands(hacking)";
+
+    [Header("Codes")]
+
+    string currentCode;
+
+    const string securityCheck = "securityCheck()";
+    const string hackSecurity = "hack(security)";
+    const string stealDataCode = "steal(data)";
+  
+
+    [Header("GamePlayOriented")]
+    bool firstTime = true;
+    bool hackingOn = false;
+    
+
+
+    [Header("SecuritySystem")]
+
+
+    bool hasSecurity;
+    bool hasSC_PRO;
+
+
+    string modelLevel;
+    string modelLevelNone = "Null";
+    string modelLevelOne = "X9000";
+    string modelLeveTwo = "X9125";
+
+    string securityLevel;
+    string securityLevelNone = "Null";
+    int securityLevelOne = 1;
+    int securityLevelTwo = 2;
+
+    string securityCode;
+    string securityCodeNone = "Null";
+    int securityCodeOne = 323;
+    int securityCodeTwo = 9134;
+
+    string hackingDifficulty;
+    string hackingDifficultyNone = "Very easy";
+    string hackingDifficultyOne = "Easy";
+    string hackingDifficultyTwo = "Medium";
+
+    string securityBrand;
+    string securityBrandNone = "Null";
+    string securityBrandOne = "FireLax";
+    string securityBrandTwo = "Unten101";
+
+    string securityPassColor;
+    string securityPassColorNone = "Null";
+    string securityPassColorOne = "Green";
+    string securityPassColorTwo = "Yellow";
+
+    bool securityIsHacked;
+
     void Start()
     {
-
      
-        
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+
+        delayCurrentTime -= Time.deltaTime;
+
+        if(delayCurrentTime <= 0)
+        {
+            textDone = true;
+        }
+        else
+        {
+            textDone = false;
+        }
+
+
+        if(textDone == true)
+        {
+            writenCodeInput.ActivateInputField();
+        }
+        else if(textDone == false)
+        {
+            writenCodeInput.DeactivateInputField();
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.LeftControl) && textDone == true || Input.GetKeyDown(KeyCode.RightControl) && textDone == true)
+        {
+            writenCodeInput.text = "";
+            currentCode = "";
+
+            fullText = "Error <<< No permission to use control<<<\n\n";
+            delayCurrentTime = 0.5f;
+            StartCoroutine("ShowText");
+        }
+
+            if (Input.GetKeyDown(KeyCode.Return) && textDone==true)
+        {
+            currentCode = writenCodeInput.text;
+
+          
+            if(hackingOn == false)
+            {
+                switch (currentCode)
+                {
+
+                    case help:
+                        fullText = "help()\n\n" + ">>>You have several hacking commands that you must write to be able to " +
+                        "hack into the system\n <<< Remember to check the computer if it has any security before hacking it\n  >>> Use " +
+                        "this command: <commands(hacking)> to see all available hacking commands\n >>> Use this command: <commands()> to see all " +
+                        "available non-hacking commands\n" + "  /// You can buy more hacking commands in the shop<<\n\n";
+
+                        delayCurrentTime = 5f;
+
+                        StartCoroutine("ShowText");
+                        currentCode = "";
+
+
+                        break;
+
+                    case commands:
+                        fullText = "commands()\n\n " + "<<commands>>:\n " + "help()\n" + " leave()\n" + " mission()\n" + "commands(hacking)\n\n";
+
+                        StartCoroutine("ShowText");
+
+                        delayCurrentTime = 1f;
+                        currentCode = "";
+                        break;
+
+                    case commandsHacking:
+
+
+                        fullText = "commands(hacking)\n\n " + "<<Available hacking commands>>:\n " + "securityCheck()\n" + " hack(Security)\n" + "steal(data)\n\n";
+                        delayCurrentTime = 1f;
+                        StartCoroutine("ShowText");
+                        currentCode = "";
+
+                        break;
+
+
+                    case securityCheck:
+
+                        securityCheck_();
+
+                        break;
+
+                    case hackSecurity:
+
+                        hackSecurity_();
+
+                        break;
+
+                    default:
+
+                        delayCurrentTime = 0.5f;
+                        fullText = "<<Error wrong code input>>\n\n";
+                        StartCoroutine("ShowText");
+                        currentCode = "";
+
+                        break;
+
+
+                }
+               
+            }
+            else if(hackingOn == true)
+            {
+
+            }
+            
+
+            writenCodeInput.text = "";
+        }
+
+    
     }
 
     public void changeSceneToOptionMenu()
@@ -56,12 +241,150 @@ public class GameManager : MonoBehaviour
         mainMenu.SetActive(false);
     }
 
-   
-
-
-
     public void quit()
     {
         Application.Quit();
     }
+
+    IEnumerator ShowText()
+    {
+        for(int i = 0; i < fullText.Length; i++)
+        {
+            responseText.text += fullText[i];
+            yield return new WaitForSeconds(delay);
+        }
+    }
+
+
+    public void poorMission_()
+    {
+        missionsMenu.SetActive(false);
+        gamePlayObj.SetActive(true);
+
+        tutorial();
+
+        hasSecurity = false;
+        securityLevel = securityLevelNone;
+        modelLevel = modelLevelNone;
+        hackingDifficulty = hackingDifficultyNone;
+        securityCode = securityLevelNone;
+        securityPassColor = securityPassColorNone;
+        securityBrand = securityBrandNone;
+        hasSC_PRO = false;
+
+
+
+       
+
+
+
+    }
+    public void accountMission_()
+    {
+        missionsMenu.SetActive(false);
+        gamePlayObj.SetActive(true);
+
+        tutorial();
+
+
+        hasSecurity = true;
+        securityLevel = securityLevelOne.ToString();
+        modelLevel = modelLevelOne;
+        hackingDifficulty = hackingDifficultyOne;
+        securityCode = securityCodeOne.ToString();
+        securityPassColor = securityPassColorOne;
+        securityBrand = securityBrandOne;
+        hasSC_PRO = false;
+    }
+    public void storeMission_()
+    {
+        missionsMenu.SetActive(false);
+        gamePlayObj.SetActive(true);
+
+        tutorial();
+
+    }
+    public void auctionMission_()
+    {
+        missionsMenu.SetActive(false);
+        gamePlayObj.SetActive(true);
+
+
+    }
+    public void bankMission_()
+    {
+        missionsMenu.SetActive(false);
+        gamePlayObj.SetActive(true);
+
+    }
+    
+
+    public void tutorial()
+    {
+        if (firstTime == true)
+        {
+            fullText = "Read this carefully\n <<< You will help us get some money. You will be assigned to " +
+                "hack companies and individuals\n <>>> Remember that this job is dangerous and " +
+                "can lead to a life sentence in jail <<<\n <<Always start the job by checking for " +
+                "security <securityCheck()> and deactivate it <hack(security)> //\n << Steal the data you need  by using this command: <steal(data)> <<\n " +
+                "<<>You can type the command <help()> to get more information.\n " +
+                "<><Type <commands()> to see all non-hacking commands.\n\n";
+           
+            delayCurrentTime = 5f;
+            StartCoroutine("ShowText");
+
+        }
+    }
+
+
+    public void securityCheck_()
+    {
+        if(firstTime == true)
+        {
+            fullText = "securityCheck()\n\n" + "Pay close attention to any security information there is<<< You will need it later! >> Once you start " +
+                "hacking there is no turning back>>\n\n " + "Has security = " + hasSecurity + "\n Has SC_PRO = " + hasSC_PRO + "\n  Security  " +
+              "model = " + modelLevel + "\n    Security Brand = " + securityBrand + "\n    Security Pass Color = "
+             + securityPassColor + "\n   Security Code = " + securityCode + "\n  Security level = " + securityLevel + "\n Hacking difficulty = " + hackingDifficulty + "\n\n";
+
+            delayCurrentTime = 2f;
+            StartCoroutine("ShowText");
+            currentCode = "";
+        }
+        else
+        {
+      fullText = "securityCheck()\n\n" + "Has security = " + hasSecurity + "\n Has SC_PRO = " + hasSC_PRO + "\n  Security  " +
+      "model = " + modelLevel + "\n    Security Brand = " + securityBrand + "\n    Security Pass Color = "
+      + securityPassColor + "\n   Security Code = " + securityCode + "\n  Security level = " + securityLevel + "\n Hacking difficulty = " + hackingDifficulty + "\n\n";
+
+            delayCurrentTime = 2f;
+            StartCoroutine("ShowText");
+            currentCode = "";
+        }
+       
+    }
+
+
+    public void hackSecurity_()
+    {
+
+
+        if (hasSecurity == true)
+        {
+            responseText.text = "";
+            currentCode = "";
+            hackingOn = true;
+        }
+        else if (hasSecurity == false)
+        {
+            fullText = "<<<Error no security found<<<\n\n";
+            delayCurrentTime = 2f;
+            StartCoroutine("ShowText");
+            currentCode = "";
+        }
+
+    }
+
+ 
+
+
 }
