@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     [Header("Options")]
 
     const string help = "help()";
-    const string leave = "leave()";
+    const string leaveMission = "leaveMission()";
     const string missionInfo = "mission()";
     const string commands = "commands()";
     const string commandsHacking = "commands(hacking)";
@@ -42,11 +42,12 @@ public class GameManager : MonoBehaviour
     const string securityScan = "securityScan()";
     const string hackSecurity = "hack(security)";
     const string stealDataCode = "steal(data)";
-  
+    const string hackit = "hackit()";
+
 
     [Header("GamePlayOriented")]
     bool firstTime = true;
-    bool hackingSecurityOn = false;
+    bool hackingMode = false;
     
 
 
@@ -135,7 +136,7 @@ public class GameManager : MonoBehaviour
             currentCode = writenCodeInput.text;
 
           
-            if(hackingSecurityOn == false)
+            if(hackingMode == false)
             {
                 switch (currentCode)
                 {
@@ -143,11 +144,11 @@ public class GameManager : MonoBehaviour
                     case help:
                         fullText = "help()\n\n" + ">>>You have several hacking commands that you must write to be able to " +
                         "hack into the system\n <<< Remember to scan the security before hacking it\n " + "<<Use this command to enter hacking" +
-                        " mode >>> <hackit()>\n "+ "There is no turning back when you enter hacking mode<<\n" + ">>> Use " +
-                        "this command: <commands(hacking)> to see all available hacking commands\n >>> Use this command: <commands()> to see all<<< " +
+                        " mode >>> " + "<" + hackit + ">\n"+ "There is no turning back when you enter hacking mode<<\n" + ">>> Use " +
+                        "this command: " + "<" + commandsHacking + ">" + " to see all available hacking commands\n >>> Use this command: " + "<" + commands + ">" + " to see all<<< " +
                         "available non-hacking commands\n" + "  /// You can buy more hacking commands in the shop<<\n\n";
 
-                        delayCurrentTime = 5f;
+                        delayCurrentTime = 6f;
 
                         StartCoroutine("ShowText");
                         currentCode = "";
@@ -156,7 +157,7 @@ public class GameManager : MonoBehaviour
                         break;
 
                     case commands:
-                        fullText = "commands()\n\n " + "<<commands>>:\n " + "help()\n" + " leave()\n" + " mission()\n" + "commands(hacking)\n\n";
+                        fullText = commands + "\n\n" + "<<commands>>:\n" + help + "\n " + leaveMission +"\n  " + missionInfo + "\n " + commandsHacking + "\n\n";
 
                         StartCoroutine("ShowText");
 
@@ -164,10 +165,24 @@ public class GameManager : MonoBehaviour
                         currentCode = "";
                         break;
 
+
+                    case leaveMission:
+
+                        
+                        gamePlayObj.SetActive(false);
+                        missionsMenu.SetActive(true);
+
+                        securityIsHacked = false;
+                        responseText.text = "";
+                        currentCode = "";
+                        break;
+
+
+
                     case commandsHacking:
 
 
-                        fullText = "commands(hacking)\n\n " + "<<Available hacking commands>>:\n " + "securityScan()\n" + " hack(Security)\n" + "steal(data)\n\n";
+                        fullText = commandsHacking + "\n\n" + "<<Available hacking commands>>:\n" + securityScan + "\n " + hackSecurity + "\n " + stealDataCode + "\n" + hackit + "\n\n";
                         delayCurrentTime = 1f;
                         StartCoroutine("ShowText");
                         currentCode = "";
@@ -183,9 +198,23 @@ public class GameManager : MonoBehaviour
 
                     case hackSecurity:
 
-                        hackSecurity_();
+                        fullText = "<<Error You need to enter hacking mode to use this command<<";
 
                         break;
+
+                    case hackit:
+
+                        responseText.text = "";
+
+                        fullText = "<<WARNING>> YOU ENTERED HACKING MODE <<WARNING>>\n\n" + ">!!>>>!!>DONT WASTE YOUR TIME AND START HACKING!!!>>>!!!>\n\n";
+                        delayCurrentTime = 1f;
+                        StartCoroutine("ShowText");
+                        currentCode = "";
+
+                        hackingMode = true;
+
+                        break;
+
 
                     default:
 
@@ -200,12 +229,86 @@ public class GameManager : MonoBehaviour
                 }
                
             }
-            else if(hackingSecurityOn == true)
+            else if(hackingMode == true)
             {
+
+                switch (currentCode)
+                {
+                    case help:
+
+                        break;
+
+                    case commands:
+
+                        fullText = "<<!!COMMAND LIST BLOCKED!!>>\n\n";
+
+                        StartCoroutine("ShowText");
+
+                        delayCurrentTime = 0.5f;
+                        currentCode = "";
+
+                        break;
+
+
+                    case leaveMission:
+                   
+                        gamePlayObj.SetActive(false);
+                        missionsMenu.SetActive(true);
+
+                        securityIsHacked = false;
+                        hackingMode = false;
+                        responseText.text = "";
+                        currentCode = "";
+                        break;
+
+                    case commandsHacking:
+
+                        fullText = commandsHacking + "\n\n" + "<<!!YOUR HACKING LIST!!>:\n" + securityScan + "\n " + hackSecurity + "\n " + stealDataCode + "\n" + hackit + "\n\n";
+                        delayCurrentTime = 1f;
+                        StartCoroutine("ShowText");
+                        currentCode = "";        
+
+                        break;
+
+                    case securityScan:
+
+                        fullText = "<<!!ERROR SCAN FAILD!!>>\n\n";
+                        delayCurrentTime = 0.5f;
+                        StartCoroutine("ShowText");
+                        currentCode = "";
+
+                        break;
+
+                    default:
+
+                        delayCurrentTime = 0.5f;
+                        fullText = "<<ERROR NOTHING FOUND!!!>>\n\n";
+                        StartCoroutine("ShowText");
+                        currentCode = "";
+
+                        break;
+                }
+
+
+
+
                 switch (currentCode)
                 {
 
-                    
+                    case hackSecurity:
+
+                        hackSecurity_();
+
+                        break;
+
+                    case hackit:
+
+                        fullText = ">>!!!ALREADY ENTERED>>!!!\n\n";
+                        delayCurrentTime = 0.5f;
+                        StartCoroutine("ShowText");
+                        currentCode = "";
+
+                        break;
 
 
 
@@ -336,17 +439,18 @@ public class GameManager : MonoBehaviour
             fullText = "Read this carefully\n <<< You will help us get some money. You will be assigned to " +
                 "hack companies and individuals\n <>>> Remember that this job is dangerous and " +
                 "can lead to a life sentence in jail <<<\n << Always start the job by scanning " +
-                "the security <securityScan()> and deactivate it <hack(security)> //\n "+ "<<Type <hackit()> " +
+                "the security " + "<" + securityScan + ">" + " and deactivate it " + "<" + hackSecurity + "> " + "\n" + "Type " + "<" + hackit + "> " +
                 "to enter hacking mode\n" + "There is no turning back when you enter hacking mode\n" + " << Steal the data you need  " +
-                "by using this command: <steal(data)> <<\n " +
-                "<<>You can type the command <help()> to get more information\n " +
-                "<><Type <commands()> to see all non-hacking commands\n\n";
+                "by using this command: " + "<" + stealDataCode + ">" + " <<\n " +
+                "<<>You can type the command " + "<" + help + ">" + " to get more information\n" +
+                "<><Type " + "<" + commands + ">" + " to see all non-hacking commands " + "The help menu will change during hacking mode\n\n";
            
-            delayCurrentTime = 5f;
+            delayCurrentTime = 6f;
             StartCoroutine("ShowText");
 
         }
     }
+
 
 
     public void securityScan_()
@@ -382,9 +486,8 @@ public class GameManager : MonoBehaviour
 
         if (hasSecurity == true)
         {
-            responseText.text = "";
-            currentCode = "";
-            hackingSecurityOn = true;
+            
+           
         }
         else if (hasSecurity == false)
         {
