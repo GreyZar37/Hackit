@@ -39,14 +39,14 @@ public class GameManager : MonoBehaviour
 
     string currentCode;
 
-    const string securityCheck = "securityCheck()";
+    const string securityScan = "securityScan()";
     const string hackSecurity = "hack(security)";
     const string stealDataCode = "steal(data)";
   
 
     [Header("GamePlayOriented")]
     bool firstTime = true;
-    bool hackingOn = false;
+    bool hackingSecurityOn = false;
     
 
 
@@ -135,15 +135,16 @@ public class GameManager : MonoBehaviour
             currentCode = writenCodeInput.text;
 
           
-            if(hackingOn == false)
+            if(hackingSecurityOn == false)
             {
                 switch (currentCode)
                 {
 
                     case help:
                         fullText = "help()\n\n" + ">>>You have several hacking commands that you must write to be able to " +
-                        "hack into the system\n <<< Remember to check the computer if it has any security before hacking it\n  >>> Use " +
-                        "this command: <commands(hacking)> to see all available hacking commands\n >>> Use this command: <commands()> to see all " +
+                        "hack into the system\n <<< Remember to scan the security before hacking it\n " + "<<Use this command to enter hacking" +
+                        " mode >>> <hackit()>\n "+ "There is no turning back when you enter hacking mode<<\n" + ">>> Use " +
+                        "this command: <commands(hacking)> to see all available hacking commands\n >>> Use this command: <commands()> to see all<<< " +
                         "available non-hacking commands\n" + "  /// You can buy more hacking commands in the shop<<\n\n";
 
                         delayCurrentTime = 5f;
@@ -166,7 +167,7 @@ public class GameManager : MonoBehaviour
                     case commandsHacking:
 
 
-                        fullText = "commands(hacking)\n\n " + "<<Available hacking commands>>:\n " + "securityCheck()\n" + " hack(Security)\n" + "steal(data)\n\n";
+                        fullText = "commands(hacking)\n\n " + "<<Available hacking commands>>:\n " + "securityScan()\n" + " hack(Security)\n" + "steal(data)\n\n";
                         delayCurrentTime = 1f;
                         StartCoroutine("ShowText");
                         currentCode = "";
@@ -174,9 +175,9 @@ public class GameManager : MonoBehaviour
                         break;
 
 
-                    case securityCheck:
+                    case securityScan:
 
-                        securityCheck_();
+                        securityScan_();
 
                         break;
 
@@ -199,9 +200,18 @@ public class GameManager : MonoBehaviour
                 }
                
             }
-            else if(hackingOn == true)
+            else if(hackingSecurityOn == true)
             {
+                switch (currentCode)
+                {
 
+                    
+
+
+
+                    default:
+                        break;
+                }
             }
             
 
@@ -325,10 +335,12 @@ public class GameManager : MonoBehaviour
         {
             fullText = "Read this carefully\n <<< You will help us get some money. You will be assigned to " +
                 "hack companies and individuals\n <>>> Remember that this job is dangerous and " +
-                "can lead to a life sentence in jail <<<\n <<Always start the job by checking for " +
-                "security <securityCheck()> and deactivate it <hack(security)> //\n << Steal the data you need  by using this command: <steal(data)> <<\n " +
-                "<<>You can type the command <help()> to get more information.\n " +
-                "<><Type <commands()> to see all non-hacking commands.\n\n";
+                "can lead to a life sentence in jail <<<\n << Always start the job by scanning " +
+                "the security <securityScan()> and deactivate it <hack(security)> //\n "+ "<<Type <hackit()> " +
+                "to enter hacking mode\n" + "There is no turning back when you enter hacking mode\n" + " << Steal the data you need  " +
+                "by using this command: <steal(data)> <<\n " +
+                "<<>You can type the command <help()> to get more information\n " +
+                "<><Type <commands()> to see all non-hacking commands\n\n";
            
             delayCurrentTime = 5f;
             StartCoroutine("ShowText");
@@ -337,12 +349,12 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void securityCheck_()
+    public void securityScan_()
     {
         if(firstTime == true)
         {
-            fullText = "securityCheck()\n\n" + "Pay close attention to any security information there is<<< You will need it later! >> Once you start " +
-                "hacking there is no turning back>>\n\n " + "Has security = " + hasSecurity + "\n Has SC_PRO = " + hasSC_PRO + "\n  Security  " +
+            fullText = "securityCheck()\n\n" + "Pay close attention to security information <<< You will need it later! >> Once you start " +
+                "hacking, you will not be able to scan the security>>\n\n " + "Has security = " + hasSecurity + "\n Has SC_PRO = " + hasSC_PRO + "\n  Security  " +
               "model = " + modelLevel + "\n    Security Brand = " + securityBrand + "\n    Security Pass Color = "
              + securityPassColor + "\n   Security Code = " + securityCode + "\n  Security level = " + securityLevel + "\n Hacking difficulty = " + hackingDifficulty + "\n\n";
 
@@ -352,7 +364,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-      fullText = "securityCheck()\n\n" + "Has security = " + hasSecurity + "\n Has SC_PRO = " + hasSC_PRO + "\n  Security  " +
+      fullText = "securityScan()\n\n" + "Has security = " + hasSecurity + "\n Has SC_PRO = " + hasSC_PRO + "\n  Security  " +
       "model = " + modelLevel + "\n    Security Brand = " + securityBrand + "\n    Security Pass Color = "
       + securityPassColor + "\n   Security Code = " + securityCode + "\n  Security level = " + securityLevel + "\n Hacking difficulty = " + hackingDifficulty + "\n\n";
 
@@ -372,7 +384,7 @@ public class GameManager : MonoBehaviour
         {
             responseText.text = "";
             currentCode = "";
-            hackingOn = true;
+            hackingSecurityOn = true;
         }
         else if (hasSecurity == false)
         {
