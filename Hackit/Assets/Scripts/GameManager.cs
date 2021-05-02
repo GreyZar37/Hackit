@@ -55,7 +55,10 @@ public class GameManager : MonoBehaviour
     bool waitingForInputAndWaitingForGameplay;
     bool waitingForInput;
 
-    
+    bool timeWasSet = false;
+    int timeToHack;
+    int timeToHackOne = 300;
+    int timeToHackTwo = 200;
 
 
     [Header("SecuritySystem")]
@@ -70,8 +73,8 @@ public class GameManager : MonoBehaviour
     string modelLevelOne = "X9000";
     string modelLeveTwo = "X9125";
 
-    string securityLevel;
-    string securityLevelNone = "Null";
+    int securityLevel;
+    int securityLevelNone = 0;
     int securityLevelOne = 1;
     int securityLevelTwo = 2;
 
@@ -114,10 +117,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+
         print(waitingForInputAndWaitingForGameplay);
         print(waitingForInput);
 
         delayCurrentTime -= Time.deltaTime;
+
 
         if(delayCurrentTime <= 0)
         {
@@ -143,7 +148,41 @@ public class GameManager : MonoBehaviour
         {
             writenCodeInput.DeactivateInputField();
         }
+        if(hackingMode == true)
+        {
+            
+            switch (securityLevel)
+            {
+                case 0:
+                    if(timeWasSet == false)
+                    {
+                        alarm.timerStarted = false;
+                        timeWasSet = true;
+                    }
+                    break;
+                case 1:
+                    if (timeWasSet == false)
+                    {
+                        alarm.alarmTimer = timeToHackOne;
+                        alarm.timerStarted = true;
+                        timeWasSet = true;
+                    }
+                    break;
+                case 2:
+                    if (timeWasSet == false)
+                    {
+                        alarm.alarmTimer = timeToHackTwo;
+                        alarm.timerStarted = true;
+                        timeWasSet = true;
+                    }
 
+                    break;
+            }
+        }
+        else if(hackingMode == false)
+        {
+            alarm.timerStarted = false;
+        }
 
         switch (detectionRiskInt)
         {
@@ -552,7 +591,7 @@ public class GameManager : MonoBehaviour
         securityLevel = securityLevelNone;
         modelLevel = modelLevelNone;
         hackingDifficulty = hackingDifficultyNone;
-        securityCode = securityLevelNone;
+        securityCode = securityCodeNone;
         securityPassColor = securityPassColorNone;
         securityBrand = securityBrandNone;
         hasSC_PRO = false;
@@ -573,7 +612,7 @@ public class GameManager : MonoBehaviour
 
 
         hasSecurity = true;
-        securityLevel = securityLevelOne.ToString();
+        securityLevel = securityLevelOne;
         modelLevel = modelLevelOne;
         hackingDifficulty = hackingDifficultyOne;
         securityCode = securityCodeOne.ToString();
