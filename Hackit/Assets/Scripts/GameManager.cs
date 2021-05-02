@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text responseText;
    
     public TMP_InputField writenCodeInput;
+    public GameObject writenCodeInputGbj;
 
     float delay = 0.01f;
     public string fullText;
@@ -48,6 +49,12 @@ public class GameManager : MonoBehaviour
     [Header("GamePlayOriented")]
     bool firstTime = true;
     bool hackingMode = false;
+    int detectionRiskInt;
+    string detectionRisk;
+    bool securityHacking;
+    bool waitingForInputAndWaitingForGameplay;
+    bool waitingForInput;
+
     
 
 
@@ -88,8 +95,16 @@ public class GameManager : MonoBehaviour
     string securityPassColorOne = "Green";
     string securityPassColorTwo = "Yellow";
 
-    bool securityIsHacked;
+    string arrowDirection;
+    const string arrowUp = "Arrow up";
+    const string arrowDown = "Arrow down";
+    const string arrowLeft = "Arrow left";
+    const string arrowRight = "Arrow right";
+    int arrowDirectionInt;
 
+
+    bool securityIsHacked;
+    
     void Start()
     {
      
@@ -98,6 +113,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+
+        print(waitingForInputAndWaitingForGameplay);
+        print(waitingForInput);
 
         delayCurrentTime -= Time.deltaTime;
 
@@ -111,16 +129,46 @@ public class GameManager : MonoBehaviour
         }
 
 
-        if(textDone == true)
+        if(textDone == true && waitingForInputAndWaitingForGameplay == false)
         {
             writenCodeInput.ActivateInputField();
+            
         }
         else if(textDone == false)
+        {
+            writenCodeInput.DeactivateInputField();
+            
+        }
+        if(waitingForInputAndWaitingForGameplay == true || waitingForInput == true)
         {
             writenCodeInput.DeactivateInputField();
         }
 
 
+        switch (detectionRiskInt)
+        {
+
+            case 0:
+                detectionRisk = "Low\n\n";
+                break;
+            case 1:
+                detectionRisk = "Medium\n\n";
+                break;
+            case 2:
+                detectionRisk = "High\n\n";
+                break;
+            case 3:
+                detectionRisk = "Extreme\n\n";
+                break;
+            case 4:
+                detectionRisk = "DETECTED!!\n\n";
+                break;
+
+            default:
+                break;
+        }
+
+        
         if (Input.GetKeyDown(KeyCode.LeftControl) && textDone == true || Input.GetKeyDown(KeyCode.RightControl) && textDone == true)
         {
             writenCodeInput.text = "";
@@ -144,11 +192,11 @@ public class GameManager : MonoBehaviour
                     case help:
                         fullText = "help()\n\n" + ">>>You have several hacking commands that you must write to be able to " +
                         "hack into the system\n <<< Remember to scan the security before hacking it\n " + "<<Use this command to enter hacking" +
-                        " mode >>> " + "<" + hackit + ">\n"+ "There is no turning back when you enter hacking mode<<\n" + ">>> Use " +
-                        "this command: " + "<" + commandsHacking + ">" + " to see all available hacking commands\n >>> Use this command: " + "<" + commands + ">" + " to see all<<< " +
+                        " mode >>> " + " " + hackit + " \n"+ "There is no turning back when you enter hacking mode<<\n" + ">>> Use " +
+                        "this command: " + " " + commandsHacking + " " + " to see all available hacking commands\n >>> Use this command: " + " " + commands + " " + " to see all<<< " +
                         "available non-hacking commands\n" + "  /// You can buy more hacking commands in the shop<<\n\n";
 
-                        delayCurrentTime = 6f;
+                        delayCurrentTime = 8f;
 
                         StartCoroutine("ShowText");
                         currentCode = "";
@@ -206,13 +254,29 @@ public class GameManager : MonoBehaviour
 
                         responseText.text = "";
 
-                        fullText = "<<WARNING>> YOU ENTERED HACKING MODE <<WARNING>>\n\n" + ">!!>>>!!>DONT WASTE YOUR TIME AND START HACKING!!!>>>!!!>\n\n";
-                        delayCurrentTime = 1f;
-                        StartCoroutine("ShowText");
-                        currentCode = "";
+                        if(firstTime == true)
+                        {
+                            fullText = ">>NOW YOU HAVE ENTERED HACKING MODE>\n <<YOU NEED TO HACK THE SYSTEM!! TYPE "+ "<"+commandsHacking +">"+ " TO SEE ALL THE HACKING COMMANDS>>\n >>>YOU " +
+                                "HAVE LIMITED TIME!!!\n\n" + "<<WARNING>> YOU ENTERED HACKING MODE <<WARNING>>\n\n" + ">!!>>>!!>DONT WASTE YOUR TIME AND START HACKING!!!>>>!!!>\n\n";
+                            delayCurrentTime = 3.5f;
+                            StartCoroutine("ShowText");
+                            currentCode = "";
 
-                        hackingMode = true;
+                            hackingMode = true;
 
+                        }
+                        else if(firstTime == false)
+                        {
+                            fullText = "<<WARNING>> YOU ENTERED HACKING MODE <<WARNING>>\n\n" + ">!!>>>!!>DONT WASTE YOUR TIME AND START HACKING!!!>>>!!!>\n\n";
+                            delayCurrentTime = 1f;
+                            StartCoroutine("ShowText");
+                            currentCode = "";
+
+                            hackingMode = true;
+                        }
+
+                      
+                      
                         break;
 
 
@@ -229,7 +293,7 @@ public class GameManager : MonoBehaviour
                 }
                
             }
-            else if(hackingMode == true)
+            else if(hackingMode == true && securityHacking == false)
             {
 
                 switch (currentCode)
@@ -263,7 +327,7 @@ public class GameManager : MonoBehaviour
 
                     case commandsHacking:
 
-                        fullText = commandsHacking + "\n\n" + "<<!!YOUR HACKING LIST!!>:\n" + securityScan + "\n " + hackSecurity + "\n " + stealDataCode + "\n" + hackit + "\n\n";
+                        fullText = commandsHacking + "\n\n" + "<<!!YOUR HACKING LIST!!>:\n" + hackSecurity + "\n " + stealDataCode  + "\n\n";
                         delayCurrentTime = 1f;
                         StartCoroutine("ShowText");
                         currentCode = "";        
@@ -279,25 +343,20 @@ public class GameManager : MonoBehaviour
 
                         break;
 
-                    default:
-
-                        delayCurrentTime = 0.5f;
-                        fullText = "<<ERROR NOTHING FOUND!!!>>\n\n";
-                        StartCoroutine("ShowText");
-                        currentCode = "";
-
-                        break;
-                }
-
-
-
-
-                switch (currentCode)
-                {
-
                     case hackSecurity:
 
-                        hackSecurity_();
+                        if(securityIsHacked == false)
+                        {
+                            hackSecurity_();
+                        
+                        }
+                        else
+                        {
+                            fullText = ">>!!!ALREADY HACKED>>!!!\n\n";
+                            delayCurrentTime = 0.5f;
+                            StartCoroutine("ShowText");
+                            currentCode = "";
+                        }
 
                         break;
 
@@ -311,17 +370,130 @@ public class GameManager : MonoBehaviour
                         break;
 
 
-
                     default:
+
+                        delayCurrentTime = 0.5f;
+                        fullText = "<<ERROR NOTHING FOUND!!!>>\n\n";
+                        StartCoroutine("ShowText");
+                        currentCode = "";
+
                         break;
                 }
+
+
+
+
             }
-            
+
+
+            else if (hackingMode == true && securityHacking == true)
+            {
+                
+                if (currentCode.ToLower() == modelLevel.ToLower() && waitingForInputAndWaitingForGameplay == false)
+                {
+                   
+                    waitingForInputAndWaitingForGameplay = true;
+                    fullText = "!!HACKING STARTS....!\n\n" + "(PRESS SPACE TO PROCEED)\n\n";
+                    StartCoroutine("ShowText");
+                    currentCode = "";
+
+
+                }
+                else if (currentCode.ToLower() != modelLevel.ToLower() && waitingForInputAndWaitingForGameplay == false)
+                {
+                    detectionRiskInt++;
+                    fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper();
+                    StartCoroutine("ShowText");
+                    currentCode = "";
+                }
+
+            }
+
+           
+
 
             writenCodeInput.text = "";
         }
+        if (waitingForInputAndWaitingForGameplay == true)
+        
+        {
+            
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
 
-    
+               
+
+                   if (firstTime == true && waitingForInput == false)
+                   {
+                        arrowDirectionInt = Random.Range(1, 4);
+                        switch (arrowDirectionInt)
+                        {
+                            case 1:
+                                arrowDirection = arrowUp;
+                                break;
+                            case 2:
+                                arrowDirection = arrowDown;
+                                break;
+                            case 3:
+                                arrowDirection = arrowLeft;
+                                break;
+                            case 4:
+                                arrowDirection = arrowRight;
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        fullText = "<<NOW IT IS TIME TO HACK IT<<\n\n" + "<<PRESS THE SAME BUTTONS AS SHOWN IN THE CONSOLE<<\n\n" + arrowDirection.ToUpper() + "\n\n";
+
+                        StartCoroutine("ShowText");
+
+                    currentCode = "";
+                        waitingForInput = true;
+
+
+
+
+                    }
+                    else if (firstTime == false & waitingForInput == false)
+                    {
+                        arrowDirectionInt = Random.Range(1, 4);
+                        switch (arrowDirectionInt)
+                        {
+                            case 1:
+                                arrowDirection = arrowUp;
+                                break;
+                            case 2:
+                                arrowDirection = arrowDown;
+                                break;
+                            case 3:
+                                arrowDirection = arrowLeft;
+                                break;
+                            case 4:
+                                arrowDirection = arrowRight;
+                                break;
+
+                            default:
+                                break;
+                        }
+
+                        fullText = arrowDirection.ToUpper() + "\n\n";
+
+                        StartCoroutine("ShowText");
+                        currentCode = "";
+                        waitingForInput = true;
+
+
+                    }
+
+            }
+
+            arrowQuickAction();
+        }
+
+
+
     }
 
     public void changeSceneToOptionMenu()
@@ -439,13 +611,13 @@ public class GameManager : MonoBehaviour
             fullText = "Read this carefully\n <<< You will help us get some money. You will be assigned to " +
                 "hack companies and individuals\n <>>> Remember that this job is dangerous and " +
                 "can lead to a life sentence in jail <<<\n << Always start the job by scanning " +
-                "the security " + "<" + securityScan + ">" + " and deactivate it " + "<" + hackSecurity + "> " + "\n" + "Type " + "<" + hackit + "> " +
+                "the security " + " " + securityScan + " " + " and deactivate it " + " " + hackSecurity + "  " + "\n" + "Type " + " " + hackit + "  " +
                 "to enter hacking mode\n" + "There is no turning back when you enter hacking mode\n" + " << Steal the data you need  " +
-                "by using this command: " + "<" + stealDataCode + ">" + " <<\n " +
-                "<<>You can type the command " + "<" + help + ">" + " to get more information\n" +
-                "<><Type " + "<" + commands + ">" + " to see all non-hacking commands " + "The help menu will change during hacking mode\n\n";
+                "by using this command: " + " " + stealDataCode + " " + " <<\n " +
+                "<<>You can type the command " + " " + help + " " + " to get more information\n" +
+                "<><Type " + " " + commands + " " + " to see all non-hacking commands\n\n";
            
-            delayCurrentTime = 6f;
+            delayCurrentTime = 8f;
             StartCoroutine("ShowText");
 
         }
@@ -462,7 +634,7 @@ public class GameManager : MonoBehaviour
               "model = " + modelLevel + "\n    Security Brand = " + securityBrand + "\n    Security Pass Color = "
              + securityPassColor + "\n   Security Code = " + securityCode + "\n  Security level = " + securityLevel + "\n Hacking difficulty = " + hackingDifficulty + "\n\n";
 
-            delayCurrentTime = 2f;
+            delayCurrentTime = 5f;
             StartCoroutine("ShowText");
             currentCode = "";
         }
@@ -472,7 +644,7 @@ public class GameManager : MonoBehaviour
       "model = " + modelLevel + "\n    Security Brand = " + securityBrand + "\n    Security Pass Color = "
       + securityPassColor + "\n   Security Code = " + securityCode + "\n  Security level = " + securityLevel + "\n Hacking difficulty = " + hackingDifficulty + "\n\n";
 
-            delayCurrentTime = 2f;
+            delayCurrentTime = 4f;
             StartCoroutine("ShowText");
             currentCode = "";
         }
@@ -483,11 +655,15 @@ public class GameManager : MonoBehaviour
     public void hackSecurity_()
     {
 
-
         if (hasSecurity == true)
         {
-            
-           
+            fullText = "__TYPE THE SECURITY MODEL NAME__\n\n";
+            delayCurrentTime = 1f;
+            StartCoroutine("ShowText");
+            currentCode = "";
+            securityHacking = true;
+
+
         }
         else if (hasSecurity == false)
         {
@@ -497,8 +673,97 @@ public class GameManager : MonoBehaviour
             currentCode = "";
         }
 
+
+    }
+    public void arrowChanger()
+    {
+        arrowDirectionInt = Random.Range(1, 4);
+        switch (arrowDirectionInt)
+        {
+            case 1:
+                arrowDirection = arrowUp;
+                break;
+            case 2:
+                arrowDirection = arrowDown;
+                break;
+            case 3:
+                arrowDirection = arrowLeft;
+                break;
+            case 4:
+                arrowDirection = arrowRight;
+                break;
+
+            default:
+                break;
+        }
+
+        fullText = arrowDirection.ToUpper() + "\n\n";
+
+        StartCoroutine("ShowText");
+        currentCode = "";
+      
     }
 
+    public void arrowQuickAction()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (arrowDirection == arrowDown)
+            {
+                arrowChanger();
+            }
+            else
+            {
+                detectionRiskInt++;
+                fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper() + arrowDirection.ToUpper() + "\n\n";
+                StartCoroutine("ShowText");
+                currentCode = "";
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (arrowDirection == arrowUp)
+            {
+                arrowChanger();
+            }
+            else
+            {
+                detectionRiskInt++;
+                fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper() + arrowDirection.ToUpper() + "\n\n";
+                StartCoroutine("ShowText");
+                currentCode = "";
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if (arrowDirection == arrowLeft)
+            {
+                arrowChanger();
+            }
+            else
+            {
+                detectionRiskInt++;
+                fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper() + arrowDirection.ToUpper() + "\n\n";
+                StartCoroutine("ShowText");
+                currentCode = "";
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (arrowDirection == arrowRight)
+            {
+                arrowChanger();
+            }
+            else
+            {
+                detectionRiskInt++;
+                fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper() + "\n\n" + arrowDirection.ToUpper() + "\n\n";
+                StartCoroutine("ShowText");
+                currentCode = "";
+
+            }
+        }
+    }
  
 
 
