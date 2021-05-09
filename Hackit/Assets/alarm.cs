@@ -25,7 +25,7 @@ public class alarm : MonoBehaviour
     }
 
     // Update is called once per frame
-    void DisplayTimer()
+    public void DisplayTimer()
     {
        
 

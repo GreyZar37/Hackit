@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public GameObject shopMenu;
     public GameObject missionsMenu;
     public GameObject gamePlayObj;
+    public GameObject alarmClock;
 
     public TMP_Text responseText;
    
@@ -36,6 +37,11 @@ public class GameManager : MonoBehaviour
     const string commands = "commands()";
     const string commandsHacking = "commands(hacking)";
 
+    float restartCooldownTime = 2;
+    float currenRestartTimer;
+
+
+
     [Header("Codes")]
 
     string currentCode;
@@ -47,6 +53,15 @@ public class GameManager : MonoBehaviour
 
 
     [Header("GamePlayOriented")]
+
+    int money;
+
+    string mission;
+    const string poorMission = "poorMission";
+    const string accountMission = "accountMission";
+    const string storeMission = "storeMission";
+
+
     bool firstTime = true;
     bool hackingMode = false;
     int detectionRiskInt;
@@ -54,12 +69,30 @@ public class GameManager : MonoBehaviour
     bool securityHacking;
     bool waitingForInputAndWaitingForGameplay;
     bool waitingForInput;
+    bool furtherHack;
+    bool noFurtherHack;
 
     bool timeWasSet = false;
     int timeToHack;
     int timeToHackOne = 300;
-    int timeToHackTwo = 200;
+    int timeToHackTwo = 150;
 
+    int arrowsLeftLvlOne = 21;
+    int arrowsLeftLvlTwo = 45;
+
+    int arrowsLeft;
+    bool arrowGameCompletedOne;
+    bool arrowGameTwoStarted;
+    bool arrowGameTwoEnded;
+
+    bool mainInterfaceActive = true;
+
+    int moneyToGive = 0;
+    int moneyToGiveNone = 20;
+    int moneyToGiveOne = 500;
+    int moneyToGiveTwo = 2500;
+
+    bool dataStolen;
 
     [Header("SecuritySystem")]
 
@@ -67,6 +100,8 @@ public class GameManager : MonoBehaviour
     bool hasSecurity;
     bool hasSC_PRO;
 
+    string securityInfo;
+    int securityNum;
 
     string modelLevel;
     string modelLevelNone = "Null";
@@ -107,22 +142,21 @@ public class GameManager : MonoBehaviour
 
 
     bool securityIsHacked;
-    
+    bool securityIs50Hacked;
+
     void Start()
     {
-     
-
+ 
+       
     }
 
     void Update()
     {
+        print(money);
+        print(alarm.timerStarted);
 
-
-        print(waitingForInputAndWaitingForGameplay);
-        print(waitingForInput);
-
+        currenRestartTimer -= Time.deltaTime;
         delayCurrentTime -= Time.deltaTime;
-
 
         if(delayCurrentTime <= 0)
         {
@@ -132,7 +166,6 @@ public class GameManager : MonoBehaviour
         {
             textDone = false;
         }
-
 
         if(textDone == true && waitingForInputAndWaitingForGameplay == false)
         {
@@ -148,30 +181,132 @@ public class GameManager : MonoBehaviour
         {
             writenCodeInput.DeactivateInputField();
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            if(currenRestartTimer <= 0 && textDone == true)
+            {
+                restart_();
+                currenRestartTimer = restartCooldownTime;
+            }
+            
+        }
+        
+       
+
+        if(alarm.alarmTimer < 1)
+        {
+
+            alarm.alarmTimer = 0;
+
+            if (mission != poorMission && hackingMode == true)
+            {
+                gameOver();
+                
+            }
+            
+        
+        }
+        if(detectionRiskInt == 4)
+        {
+            gameOver();
+        }
+
+        if(securityIsHacked == true)
+        {
+            mainInterfaceActive = true;
+        }
+
+        if (arrowGameCompletedOne == true && Input.GetKeyDown(KeyCode.Return) && furtherHack == false && securityIsHacked == false) 
+        {
+            mainInterfaceActive = false;
+            currentCode = writenCodeInput.text;
+            writenCodeInput.text = "";
+
+            switch (currentCode)
+            {
+                case "50%()":
+                    noFurtherHack = true;
+                    currentCode = "";
+                    break;
+                case "100%()":
+                    furtherHack = true;
+                    currentCode = "";
+                    break;
+
+                default:
+                    fullText = "WRONG CODE INPUT\n\n";
+                    delayCurrentTime = 1f;
+                    StartCoroutine("ShowText");
+                    currentCode = "";
+                    break;
+            }
+        }
+
+        if(furtherHack == true)
+        {
+            if(arrowGameTwoStarted == false)
+            {
+                arrowsLeft = arrowsLeftLvlOne;
+
+
+                arrowDirectionInt = Random.Range(1, 4);
+                switch (arrowDirectionInt)
+                {
+                    case 1:
+                        arrowDirection = arrowUp;
+                        break;
+                    case 2:
+                        arrowDirection = arrowDown;
+                        break;
+                    case 3:
+                        arrowDirection = arrowLeft;
+                        break;
+                    case 4:
+                        arrowDirection = arrowRight;
+                        break;
+
+                    default:
+                        break;
+                }
+
+                fullText = arrowDirection.ToUpper() + "\n\n";
+
+                StartCoroutine("ShowText");
+                delayCurrentTime = 0.2f;
+                currentCode = "";
+            }
+            
+            arrowQuickAction();
+            arrowGameTwoStarted = true;
+        }
+        else if(noFurtherHack == true && securityIsHacked == false)
+        {
+            StopAllCoroutines();
+            securityIsHacked = true;
+            securityHacking = false;
+            securityIs50Hacked = true;         
+            responseText.text = "";
+            fullText = "SECURITY IS 50% HACKED\n\n";
+            delayCurrentTime = 1f;
+            StartCoroutine("ShowText");
+        }
+
         if(hackingMode == true)
         {
-            
             switch (securityLevel)
             {
-                case 0:
-                    if(timeWasSet == false)
-                    {
-                        alarm.timerStarted = false;
-                        timeWasSet = true;
-                    }
-                    break;
                 case 1:
                     if (timeWasSet == false)
                     {
-                        alarm.alarmTimer = timeToHackOne;
                         alarm.timerStarted = true;
                         timeWasSet = true;
+                        print("Started");
                     }
                     break;
                 case 2:
                     if (timeWasSet == false)
                     {
-                        alarm.alarmTimer = timeToHackTwo;
                         alarm.timerStarted = true;
                         timeWasSet = true;
                     }
@@ -206,7 +341,6 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
-
         
         if (Input.GetKeyDown(KeyCode.LeftControl) && textDone == true || Input.GetKeyDown(KeyCode.RightControl) && textDone == true)
         {
@@ -218,10 +352,9 @@ public class GameManager : MonoBehaviour
             StartCoroutine("ShowText");
         }
 
-            if (Input.GetKeyDown(KeyCode.Return) && textDone==true)
+            if (Input.GetKeyDown(KeyCode.Return) && textDone==true && mainInterfaceActive == true)
         {
             currentCode = writenCodeInput.text;
-
           
             if(hackingMode == false)
             {
@@ -233,7 +366,7 @@ public class GameManager : MonoBehaviour
                         "hack into the system\n <<< Remember to scan the security before hacking it\n " + "<<Use this command to enter hacking" +
                         " mode >>> " + " " + hackit + " \n"+ "There is no turning back when you enter hacking mode<<\n" + ">>> Use " +
                         "this command: " + " " + commandsHacking + " " + " to see all available hacking commands\n >>> Use this command: " + " " + commands + " " + " to see all<<< " +
-                        "available non-hacking commands\n" + "  /// You can buy more hacking commands in the shop<<\n\n";
+                        "available non-hacking commands\n" + "<<Press left alt>>" + " to restart the mission\n" + "  /// You can buy more hacking commands in the shop<<\n\n";
 
                         delayCurrentTime = 8f;
 
@@ -255,15 +388,10 @@ public class GameManager : MonoBehaviour
 
                     case leaveMission:
 
-                        
-                        gamePlayObj.SetActive(false);
-                        missionsMenu.SetActive(true);
+                        leaveMission_();
 
-                        securityIsHacked = false;
-                        responseText.text = "";
-                        currentCode = "";
+
                         break;
-
 
 
                     case commandsHacking:
@@ -283,9 +411,21 @@ public class GameManager : MonoBehaviour
 
                         break;
 
+                    case stealDataCode:
+
+                        fullText = "<<Error You need to enter hacking mode to use this command<<\n\n";
+                        delayCurrentTime = 1f;
+                        StartCoroutine("ShowText");
+                        currentCode = "";
+
+                        break;
+
                     case hackSecurity:
 
-                        fullText = "<<Error You need to enter hacking mode to use this command<<";
+                        fullText = "<<Error You need to enter hacking mode to use this command<<\n\n";
+                        delayCurrentTime = 1f;
+                        StartCoroutine("ShowText");
+                        currentCode = "";
 
                         break;
 
@@ -295,7 +435,7 @@ public class GameManager : MonoBehaviour
 
                         if(firstTime == true)
                         {
-                            fullText = ">>NOW YOU HAVE ENTERED HACKING MODE>\n <<YOU NEED TO HACK THE SYSTEM!! TYPE "+ "<"+commandsHacking +">"+ " TO SEE ALL THE HACKING COMMANDS>>\n >>>YOU " +
+                            fullText = ">>NOW YOU HAVE ENTERED HACKING MODE>\n <<YOU NEED TO HACK THE SYSTEM!! TYPE "+ "<"+commandsHacking +">"+ " \nTO SEE ALL THE HACKING COMMANDS>>\n >>>YOU " +
                                 "HAVE LIMITED TIME!!!\n\n" + "<<WARNING>> YOU ENTERED HACKING MODE <<WARNING>>\n\n" + ">!!>>>!!>DONT WASTE YOUR TIME AND START HACKING!!!>>>!!!>\n\n";
                             delayCurrentTime = 3.5f;
                             StartCoroutine("ShowText");
@@ -313,11 +453,10 @@ public class GameManager : MonoBehaviour
 
                             hackingMode = true;
                         }
-
-                      
-                      
+        
                         break;
 
+                    
 
                     default:
 
@@ -341,27 +480,20 @@ public class GameManager : MonoBehaviour
 
                         break;
 
-                    case commands:
 
-                        fullText = "<<!!COMMAND LIST BLOCKED!!>>\n\n";
+                    case commands:
+                        fullText = commands + "\n\n" + "<<commands>>:\n".ToUpper() + help + "\n " + leaveMission + "\n  " + missionInfo + "\n " + commandsHacking + "\n\n";
 
                         StartCoroutine("ShowText");
 
-                        delayCurrentTime = 0.5f;
+                        delayCurrentTime = 1f;
                         currentCode = "";
-
                         break;
 
 
                     case leaveMission:
-                   
-                        gamePlayObj.SetActive(false);
-                        missionsMenu.SetActive(true);
 
-                        securityIsHacked = false;
-                        hackingMode = false;
-                        responseText.text = "";
-                        currentCode = "";
+                        leaveMission_();
                         break;
 
                     case commandsHacking:
@@ -397,7 +529,17 @@ public class GameManager : MonoBehaviour
                             currentCode = "";
                         }
 
+                  
+
                         break;
+
+
+                    case stealDataCode:
+
+                        dataSteal();
+
+                        break;
+
 
                     case hackit:
 
@@ -425,26 +567,30 @@ public class GameManager : MonoBehaviour
             }
 
 
-            else if (hackingMode == true && securityHacking == true)
+            else if (hackingMode == true && securityHacking == true &&  arrowGameCompletedOne == false)
             {
                 
-                if (currentCode.ToLower() == modelLevel.ToLower() && waitingForInputAndWaitingForGameplay == false)
+                if (currentCode.ToLower() == securityInfo.ToLower() && waitingForInputAndWaitingForGameplay == false)
                 {
                    
                     waitingForInputAndWaitingForGameplay = true;
                     fullText = "!!HACKING STARTS....!\n\n" + "(PRESS SPACE TO PROCEED)\n\n";
+                    delayCurrentTime = 2f;
                     StartCoroutine("ShowText");
                     currentCode = "";
 
 
                 }
-                else if (currentCode.ToLower() != modelLevel.ToLower() && waitingForInputAndWaitingForGameplay == false)
+
+                else if (currentCode.ToLower() != securityInfo.ToLower() && waitingForInputAndWaitingForGameplay == false)
                 {
                     detectionRiskInt++;
                     fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper();
+                    delayCurrentTime = 2f;
                     StartCoroutine("ShowText");
                     currentCode = "";
                 }
+             
 
             }
 
@@ -464,7 +610,7 @@ public class GameManager : MonoBehaviour
 
                    if (firstTime == true && waitingForInput == false)
                    {
-                        arrowDirectionInt = Random.Range(1, 4);
+                        arrowDirectionInt = Random.Range(1, 5);
                         switch (arrowDirectionInt)
                         {
                             case 1:
@@ -484,12 +630,12 @@ public class GameManager : MonoBehaviour
                                 break;
                         }
 
-                        fullText = "<<NOW IT IS TIME TO HACK IT<<\n\n" + "<<PRESS THE SAME BUTTONS AS SHOWN IN THE CONSOLE<<\n\n" + arrowDirection.ToUpper() + "\n\n";
-
-                        StartCoroutine("ShowText");
+                    fullText = "<<NOW IT IS TIME TO HACK IT<<\n\n" + "<<PRESS THE SAME BUTTONS AS SHOWN IN THE CONSOLE<<\n\n" + arrowDirection.ToUpper() + "\n\n";
+                    delayCurrentTime = 0.5f;
+                    StartCoroutine("ShowText");
 
                     currentCode = "";
-                        waitingForInput = true;
+                    waitingForInput = true;
 
 
 
@@ -497,7 +643,7 @@ public class GameManager : MonoBehaviour
                     }
                     else if (firstTime == false & waitingForInput == false)
                     {
-                        arrowDirectionInt = Random.Range(1, 4);
+                        arrowDirectionInt = Random.Range(1, 5);
                         switch (arrowDirectionInt)
                         {
                             case 1:
@@ -530,9 +676,6 @@ public class GameManager : MonoBehaviour
 
             arrowQuickAction();
         }
-
-
-
     }
 
     public void changeSceneToOptionMenu()
@@ -585,6 +728,11 @@ public class GameManager : MonoBehaviour
         missionsMenu.SetActive(false);
         gamePlayObj.SetActive(true);
 
+        mission = poorMission;
+        moneyToGive = moneyToGiveNone;
+        alarm.alarmTimer = 0;
+        alarmClock.GetComponent<alarm>().DisplayTimer();
+
         tutorial();
 
         hasSecurity = false;
@@ -608,6 +756,11 @@ public class GameManager : MonoBehaviour
         missionsMenu.SetActive(false);
         gamePlayObj.SetActive(true);
 
+        mission = accountMission;
+        moneyToGive = moneyToGiveOne;
+        alarm.alarmTimer = timeToHackOne;
+        alarmClock.GetComponent<alarm>().DisplayTimer();
+
         tutorial();
 
 
@@ -619,14 +772,32 @@ public class GameManager : MonoBehaviour
         securityPassColor = securityPassColorOne;
         securityBrand = securityBrandOne;
         hasSC_PRO = false;
+
+        arrowsLeft = arrowsLeftLvlOne;
     }
     public void storeMission_()
     {
         missionsMenu.SetActive(false);
         gamePlayObj.SetActive(true);
 
+        mission = storeMission;
+        moneyToGive = moneyToGiveTwo;
+        alarm.alarmTimer = timeToHackTwo;
+        alarmClock.GetComponent<alarm>().DisplayTimer();
+
         tutorial();
 
+
+        hasSecurity = true;
+        securityLevel = securityLevelTwo;
+        modelLevel = modelLeveTwo;
+        hackingDifficulty = hackingDifficultyTwo;
+        securityCode = securityCodeTwo.ToString();
+        securityPassColor = securityPassColorTwo;
+        securityBrand = securityBrandTwo;
+        hasSC_PRO = true;
+
+        arrowsLeft = arrowsLeftLvlTwo;
     }
     public void auctionMission_()
     {
@@ -641,8 +812,6 @@ public class GameManager : MonoBehaviour
         gamePlayObj.SetActive(true);
 
     }
-    
-
     public void tutorial()
     {
         if (firstTime == true)
@@ -654,21 +823,18 @@ public class GameManager : MonoBehaviour
                 "to enter hacking mode\n" + "There is no turning back when you enter hacking mode\n" + " << Steal the data you need  " +
                 "by using this command: " + " " + stealDataCode + " " + " <<\n " +
                 "<<>You can type the command " + " " + help + " " + " to get more information\n" +
-                "<><Type " + " " + commands + " " + " to see all non-hacking commands\n\n";
+                "<><Type " + " " + commands + " " + " to see all non-hacking commands\n" + "<<Press left alt>>" + " to restart the mission\n\n";
            
             delayCurrentTime = 8f;
             StartCoroutine("ShowText");
 
         }
     }
-
-
-
     public void securityScan_()
     {
         if(firstTime == true)
         {
-            fullText = "securityCheck()\n\n" + "Pay close attention to security information <<< You will need it later! >> Once you start " +
+            fullText = securityScan +"\n\n" + "Pay close attention to security information <<< You will need it later! >> Once you start " +
                 "hacking, you will not be able to scan the security>>\n\n " + "Has security = " + hasSecurity + "\n Has SC_PRO = " + hasSC_PRO + "\n  Security  " +
               "model = " + modelLevel + "\n    Security Brand = " + securityBrand + "\n    Security Pass Color = "
              + securityPassColor + "\n   Security Code = " + securityCode + "\n  Security level = " + securityLevel + "\n Hacking difficulty = " + hackingDifficulty + "\n\n";
@@ -679,7 +845,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-      fullText = "securityScan()\n\n" + "Has security = " + hasSecurity + "\n Has SC_PRO = " + hasSC_PRO + "\n  Security  " +
+      fullText = securityScan +"\n\n" + "Has security = " + hasSecurity + "\n Has SC_PRO = " + hasSC_PRO + "\n  Security  " +
       "model = " + modelLevel + "\n    Security Brand = " + securityBrand + "\n    Security Pass Color = "
       + securityPassColor + "\n   Security Code = " + securityCode + "\n  Security level = " + securityLevel + "\n Hacking difficulty = " + hackingDifficulty + "\n\n";
 
@@ -689,19 +855,39 @@ public class GameManager : MonoBehaviour
         }
        
     }
-
-
     public void hackSecurity_()
     {
 
         if (hasSecurity == true)
         {
-            fullText = "__TYPE THE SECURITY MODEL NAME__\n\n";
-            delayCurrentTime = 1f;
-            StartCoroutine("ShowText");
-            currentCode = "";
-            securityHacking = true;
-
+            securityNum = Random.Range(1, 4);
+            switch (securityNum)
+            {
+                case 1:
+                    securityInfo = securityPassColor;
+                    fullText = "__TYPE THE SECURITY PASS COLOR__\n\n";
+                    delayCurrentTime = 1f;
+                    StartCoroutine("ShowText");
+                    currentCode = "";
+                    securityHacking = true;
+                    break;
+                case 2:
+                    securityInfo = securityCode;
+                    fullText = "__TYPE THE SECURITY CODE__\n\n";
+                    delayCurrentTime = 1f;
+                    StartCoroutine("ShowText");
+                    currentCode = "";
+                    securityHacking = true;
+                    break;
+                case 3:
+                    securityInfo = modelLevel;
+                    fullText = "__TYPE THE SECURITY MODEL NAME__\n\n";
+                    delayCurrentTime = 1f;
+                    StartCoroutine("ShowText");
+                    currentCode = "";
+                    securityHacking = true;
+                    break; 
+            }
 
         }
         else if (hasSecurity == false)
@@ -716,7 +902,9 @@ public class GameManager : MonoBehaviour
     }
     public void arrowChanger()
     {
-        arrowDirectionInt = Random.Range(1, 4);
+
+        arrowsLeft--;
+        arrowDirectionInt = Random.Range(1, 5);
         switch (arrowDirectionInt)
         {
             case 1:
@@ -736,74 +924,313 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        fullText = arrowDirection.ToUpper() + "\n\n";
+        fullText = arrowDirection.ToUpper() + "\n" + "<ARROWS REMAINING:" + arrowsLeft + "\n\n";
 
         StartCoroutine("ShowText");
         currentCode = "";
       
     }
-
     public void arrowQuickAction()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if (arrowDirection == arrowDown)
-            {
-                arrowChanger();
-            }
-            else
-            {
-                detectionRiskInt++;
-                fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper() + arrowDirection.ToUpper() + "\n\n";
-                StartCoroutine("ShowText");
-                currentCode = "";
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            if (arrowDirection == arrowUp)
-            {
-                arrowChanger();
-            }
-            else
-            {
-                detectionRiskInt++;
-                fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper() + arrowDirection.ToUpper() + "\n\n";
-                StartCoroutine("ShowText");
-                currentCode = "";
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if (arrowDirection == arrowLeft)
-            {
-                arrowChanger();
-            }
-            else
-            {
-                detectionRiskInt++;
-                fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper() + arrowDirection.ToUpper() + "\n\n";
-                StartCoroutine("ShowText");
-                currentCode = "";
-            }
-        }
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (arrowDirection == arrowRight)
-            {
-                arrowChanger();
-            }
-            else
-            {
-                detectionRiskInt++;
-                fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper() + "\n\n" + arrowDirection.ToUpper() + "\n\n";
-                StartCoroutine("ShowText");
-                currentCode = "";
 
+        if(arrowsLeft > 0)
+        {
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                if (arrowDirection == arrowDown)
+                {
+                    arrowChanger();
+                }
+                else
+                {
+                    detectionRiskInt++;
+                    fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper() + "\n" + arrowDirection.ToUpper() + "\n\n" ;
+                    delayCurrentTime = 1f;
+                    StartCoroutine("ShowText");
+                    currentCode = "";
+                }
             }
+            else if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                if (arrowDirection == arrowUp)
+                {
+                    arrowChanger();
+                }
+                else
+                {
+                    detectionRiskInt++;
+                    fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper() + "\n" + arrowDirection.ToUpper() + "\n\n" ;
+                    delayCurrentTime = 1.5f;
+                    StartCoroutine("ShowText");
+                    currentCode = "";
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                if (arrowDirection == arrowLeft)
+                {
+                    arrowChanger();
+                }
+                else
+                {
+                    detectionRiskInt++;
+                    fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper() + "\n" + arrowDirection.ToUpper() + "\n\n";
+                    delayCurrentTime = 1.5f;
+                    StartCoroutine("ShowText");
+                    currentCode = "";
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                if (arrowDirection == arrowRight)
+                {
+                    arrowChanger();
+                }
+                else
+                {
+                    detectionRiskInt++;
+                    fullText = "ERROR !!WRONG CODE INPUT!!\n\n" + "SECURITY DETECTION RISK: " + detectionRisk.ToUpper() + "\n" + arrowDirection.ToUpper() + "\n\n";
+                    delayCurrentTime = 1.5f;
+                    StartCoroutine("ShowText");
+                    currentCode = "";
+
+                }
+            }
+           
+        }
+        else if (arrowsLeft <= 0 && arrowGameTwoStarted == true & arrowGameTwoEnded == false)
+        {
+            StopAllCoroutines();
+            securityIsHacked = true;
+            alarm.timerStarted = false;
+            securityHacking = false;
+            responseText.text = "";
+            fullText = "SECURITY IS 100% HACKED\n\n";
+            delayCurrentTime = 1f;
+            StartCoroutine("ShowText");
+            arrowGameTwoEnded = true;
+
+        }
+        else if (arrowsLeft <= 0 && arrowGameCompletedOne == false)
+        {
+            StopAllCoroutines();
+            arrowGameCompletedOne = true;
+            waitingForInput = false;
+            waitingForInputAndWaitingForGameplay = false;
+            hackMoreOrNot();
+
+        }
+       
+
+    }
+   
+    public void hackMoreOrNot()
+    {
+        responseText.text = "";
+        fullText = "STOP HACKING NOW WITH 50% SECURITY HACKED OR HACK TO 100%\n\n" + "50%()\n" + "100%()\n\n";
+        delayCurrentTime = 0.5f;
+        StartCoroutine("ShowText");
+    }
+    public void dataSteal()
+    {
+
+        if(securityIsHacked == true)
+        {
+            if (dataStolen == false)
+            {
+                if (securityIsHacked == true && securityIs50Hacked == true)
+                {
+                    moneyToGive /= 2;
+                    responseText.text = "";
+                    fullText = "TRANSFERRING: " + moneyToGive + "$ TO YOUR ACCOUNT\n\nTYPE  " + leaveMission + "  TO LEAVE THE MISSION\n\n";
+                    delayCurrentTime = 1f;
+                    StartCoroutine("ShowText");
+                    firstTime = false;
+                    dataStolen = true;
+                }
+                if (securityIsHacked == true && securityIs50Hacked == false)
+                {
+                    responseText.text = "";
+                    fullText = "TRANSFERRING: " + moneyToGive + "$ TO YOUR ACCOUNT\n\nTYPE  " + leaveMission + "  TO LEAVE THE MISSION\n\n";
+                    delayCurrentTime = 1f;
+                    StartCoroutine("ShowText");
+                    firstTime = false;
+                    dataStolen = true;
+                }
+            }
+            else
+            {
+                fullText = ">>!!ERROR DATA ALREADY STOLEN>>!!\n\n";
+                delayCurrentTime = 0.5f;
+                StartCoroutine("ShowText");
+            }
+        }
+        else if (hasSecurity == false)
+        {
+            responseText.text = "";
+            fullText = "TRANSFERRING: " + moneyToGive + "$ TO YOUR ACCOUNT\n\nTYPE  " + leaveMission + "  TO LEAVE THE MISSION\n\n";
+            delayCurrentTime = 0.5f;
+            StartCoroutine("ShowText");
+            dataStolen = true;
+        }
+        else
+        {
+            fullText = ">>!!ERROR CAN'T STEAL DATA>>!!\n\n";
+            delayCurrentTime = 0.5f;
+            StartCoroutine("ShowText");
+        }
+
+      
+
+       
+    }
+    public void leaveMission_()
+    {
+        if(dataStolen == true)
+        {
+            money += moneyToGive;
+           
+            gamePlayObj.SetActive(false);
+            missionsMenu.SetActive(true);
+
+            securityIsHacked = false;
+            securityIs50Hacked = false;
+            waitingForInput = false;
+            waitingForInputAndWaitingForGameplay = false;
+            alarm.alarmTimer = 0;
+            alarm.timerStarted = false;
+            dataStolen = false;
+            hackingMode = false;
+            furtherHack = false;
+            noFurtherHack = false;
+            timeWasSet = false;
+            securityHacking = false;
+
+            detectionRiskInt = 0;
+
+            alarmClock.GetComponent<alarm>().DisplayTimer();
+
+
+            arrowGameCompletedOne = false;
+            arrowGameTwoStarted = false;
+            arrowGameTwoEnded = false;
+
+            mainInterfaceActive = true;
+
+            responseText.text = "";
+            currentCode = "";
+            fullText = "";
+        }
+        else
+        {
+            gamePlayObj.SetActive(false);
+            missionsMenu.SetActive(true);
+
+            securityIsHacked = false;
+            securityIs50Hacked = false;
+            waitingForInput = false;
+            waitingForInputAndWaitingForGameplay = false;
+
+            alarm.alarmTimer = 0;
+            alarm.timerStarted = false;
+            alarmClock.GetComponent<alarm>().DisplayTimer();
+
+            dataStolen = false;
+            hackingMode = false;
+            furtherHack = false;
+            noFurtherHack = false;
+
+            detectionRiskInt = 0;
+
+            arrowGameCompletedOne = false;
+            arrowGameTwoStarted = false;
+            arrowGameTwoEnded = false;
+
+            mainInterfaceActive = true;
+
+            responseText.text = "";
+            currentCode = "";
+            fullText = "";
         }
     }
- 
+
+    public void gameOver()
+    {
+        gamePlayObj.SetActive(false);
+        missionsMenu.SetActive(true);
+
+        securityHacking = false;
+        securityIsHacked = false;
+        securityIs50Hacked = false;
+        waitingForInput = false;
+        waitingForInputAndWaitingForGameplay = false;
+        alarm.alarmTimer = 0;
+        alarm.timerStarted = false;
+        alarmClock.GetComponent<alarm>().DisplayTimer();
+        dataStolen = false;
+        hackingMode = false;
+        furtherHack = false;
+        noFurtherHack = false;
+        timeWasSet = false;
+
+        detectionRiskInt = 0;
+
+        arrowGameCompletedOne = false;
+        arrowGameTwoStarted = false;
+        arrowGameTwoEnded = false;
+
+        mainInterfaceActive = true;
+
+        responseText.text = "";
+        currentCode = "";
+        fullText = "";
+    }
+
+    public void restart_()
+    {
+        securityHacking = false;
+        securityIsHacked = false;
+        securityIs50Hacked = false;
+        waitingForInput = false;
+        waitingForInputAndWaitingForGameplay = false;
+        alarm.alarmTimer = 0;
+        alarm.timerStarted = false;
+        alarmClock.GetComponent<alarm>().DisplayTimer();
+        dataStolen = false;
+        hackingMode = false;
+        furtherHack = false;
+        noFurtherHack = false;
+        timeWasSet = false;
+
+        detectionRiskInt = 0;
+
+        arrowGameCompletedOne = false;
+        arrowGameTwoStarted = false;
+        arrowGameTwoEnded = false;
+
+        mainInterfaceActive = true;
+
+        responseText.text = "";
+        currentCode = "";
+        fullText = "";
+
+        switch (mission)
+        {
+            case poorMission:
+                poorMission_();
+                break;
+
+            case accountMission:
+                accountMission_();
+                break;
+            case storeMission:
+                storeMission_();
+                break;
+
+            default:
+                break;
+        }
+    }
 
 
 }
