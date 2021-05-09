@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
 
     [Header("GamePlayOriented")]
 
-    int money;
+    public static int money = 0;
 
     string mission;
     const string poorMission = "poorMission";
@@ -1041,6 +1041,7 @@ public class GameManager : MonoBehaviour
                 if (securityIsHacked == true && securityIs50Hacked == true)
                 {
                     moneyToGive /= 2;
+                    money += moneyToGive;
                     responseText.text = "";
                     fullText = "TRANSFERRING: " + moneyToGive + "$ TO YOUR ACCOUNT\n\nTYPE  " + leaveMission + "  TO LEAVE THE MISSION\n\n";
                     delayCurrentTime = 1f;
@@ -1051,6 +1052,7 @@ public class GameManager : MonoBehaviour
                 if (securityIsHacked == true && securityIs50Hacked == false)
                 {
                     responseText.text = "";
+                    money += moneyToGive;
                     fullText = "TRANSFERRING: " + moneyToGive + "$ TO YOUR ACCOUNT\n\nTYPE  " + leaveMission + "  TO LEAVE THE MISSION\n\n";
                     delayCurrentTime = 1f;
                     StartCoroutine("ShowText");
@@ -1067,6 +1069,7 @@ public class GameManager : MonoBehaviour
         }
         else if (hasSecurity == false)
         {
+            money += moneyToGive;
             responseText.text = "";
             fullText = "TRANSFERRING: " + moneyToGive + "$ TO YOUR ACCOUNT\n\nTYPE  " + leaveMission + "  TO LEAVE THE MISSION\n\n";
             delayCurrentTime = 0.5f;
@@ -1086,9 +1089,7 @@ public class GameManager : MonoBehaviour
     }
     public void leaveMission_()
     {
-        if(dataStolen == true)
-        {
-            money += moneyToGive;
+        
            
             gamePlayObj.SetActive(false);
             missionsMenu.SetActive(true);
@@ -1120,38 +1121,8 @@ public class GameManager : MonoBehaviour
             responseText.text = "";
             currentCode = "";
             fullText = "";
-        }
-        else
-        {
-            gamePlayObj.SetActive(false);
-            missionsMenu.SetActive(true);
-
-            securityIsHacked = false;
-            securityIs50Hacked = false;
-            waitingForInput = false;
-            waitingForInputAndWaitingForGameplay = false;
-
-            alarm.alarmTimer = 0;
-            alarm.timerStarted = false;
-            alarmClock.GetComponent<alarm>().DisplayTimer();
-
-            dataStolen = false;
-            hackingMode = false;
-            furtherHack = false;
-            noFurtherHack = false;
-
-            detectionRiskInt = 0;
-
-            arrowGameCompletedOne = false;
-            arrowGameTwoStarted = false;
-            arrowGameTwoEnded = false;
-
-            mainInterfaceActive = true;
-
-            responseText.text = "";
-            currentCode = "";
-            fullText = "";
-        }
+        
+     
     }
 
     public void gameOver()
