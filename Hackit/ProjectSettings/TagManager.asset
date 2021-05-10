@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - button
+  - Poor
+  - Account
+  - Store
+  - GameManager
+  - MusicObj
+  - FanObj
   layers:
   - Default
   - TransparentFX

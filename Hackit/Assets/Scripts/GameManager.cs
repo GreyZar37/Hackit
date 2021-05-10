@@ -16,6 +16,14 @@ public class GameManager : MonoBehaviour
     public GameObject gamePlayObj;
     public GameObject alarmClock;
 
+    public  AudioSource audioSource;
+    public  AudioClip buttonChangeClip;
+    public  AudioClip buttonClickClip;
+    public  AudioClip loadingClip;
+    public  AudioClip hackingEntered;
+    
+
+
     public TMP_Text responseText;
 
     public TMP_Text informationBoxText;
@@ -148,7 +156,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
- 
        
     }
 

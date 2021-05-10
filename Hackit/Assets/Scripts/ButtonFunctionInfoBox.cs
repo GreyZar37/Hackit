@@ -10,6 +10,7 @@ public class ButtonFunctionInfoBox : MonoBehaviour
     public UnityEvent buttonFunction;
     public Animator animator;
     public GameManager gameManager;
+    public GameObject gameManegerObj;
 
     public static string missionName;
 
@@ -17,6 +18,7 @@ public class ButtonFunctionInfoBox : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+
     }
 
     // Update is called once per frame
@@ -25,8 +27,9 @@ public class ButtonFunctionInfoBox : MonoBehaviour
         
     }
 
-    private void OnMouseEnter()
+    public void OnMouseEnter()
     {
+        gameManegerObj.GetComponent<AudioSource>().PlayOneShot(gameManegerObj.GetComponent<GameManager>().buttonChangeClip);
         switch (this.gameObject.tag)
         {
             case "Poor":
@@ -41,6 +44,8 @@ public class ButtonFunctionInfoBox : MonoBehaviour
 
             default:
                 break;
+
+               
         }
       
 
@@ -57,6 +62,7 @@ public class ButtonFunctionInfoBox : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        gameManegerObj.GetComponent<AudioSource>().PlayOneShot(gameManegerObj.GetComponent<GameManager>().buttonClickClip);
         buttonFunction.Invoke();
         gameManager.GetComponent<GameManager>().informationBoxExitOrReturn();
     }
