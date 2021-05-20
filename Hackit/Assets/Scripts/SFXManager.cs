@@ -11,28 +11,37 @@ public class SFXManager : MonoBehaviour
     public GameObject gameManagerObj;
     public GameObject MusicObj;
     public GameObject FanObj;
-    float soundVolume = 1f;
-    float musicVolume = 1f;
+    public float soundVolume = 1f;
+    public float musicVolume = 1f;
+    public bool controlsSound;
 
     // Start is called before the first frame update
     void Start()
     {
         spriteRend = GetComponent<SpriteRenderer>();
+
+
         gameManagerObj = GameObject.FindGameObjectWithTag("GameManager");
         MusicObj = GameObject.FindGameObjectWithTag("MusicObj");
         FanObj = GameObject.FindGameObjectWithTag("FanObj");
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        print(musicVolume);
-        gameManagerObj.GetComponent<AudioSource>().volume = soundVolume;
-        MusicObj.GetComponent<AudioSource>().volume = musicVolume;
-        FanObj.GetComponent<AudioSource>().volume = soundVolume;
+        
 
+        if (controlsSound == false)
+        {
+            MusicObj.GetComponent<AudioSource>().volume = musicVolume;
+
+        }
+        else
+        {
+            gameManagerObj.GetComponent<AudioSource>().volume = soundVolume;
+
+            FanObj.GetComponent<AudioSource>().volume = soundVolume;
+        }
     }
 
     public void sfxDown()
@@ -102,7 +111,7 @@ public class SFXManager : MonoBehaviour
         updateUI();
     }
 
-    private void updateUI()
+    public void updateUI()
     {
 
         spriteRend.sprite = sprites[index];

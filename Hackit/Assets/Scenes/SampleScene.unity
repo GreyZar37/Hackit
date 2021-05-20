@@ -367,12 +367,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224284288}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.0401, y: 3.0454998, z: 20.597712}
-  m_LocalScale: {x: 8.337425, y: 5.744798, z: 5.744798}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00026844454, y: 0.21574543, z: 0}
+  m_LocalScale: {x: 0.6247427, y: 0.5190254, z: 5.744798}
   m_Children: []
-  m_Father: {fileID: 1527549843}
-  m_RootOrder: 2
+  m_Father: {fileID: 1777399539}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &224284290
 SpriteRenderer:
@@ -381,7 +381,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224284288}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -456,6 +456,9 @@ MonoBehaviour:
   gameManagerObj: {fileID: 0}
   MusicObj: {fileID: 836492160}
   FanObj: {fileID: 0}
+  soundVolume: 1
+  musicVolume: 1
+  controlsSound: 0
 --- !u!1 &404059108
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,12 +517,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 499428147}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.0401, y: 1.2010998, z: 20.597712}
-  m_LocalScale: {x: 8.337425, y: 5.744798, z: 5.744798}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00026844454, y: 0.04910939, z: 0}
+  m_LocalScale: {x: 0.6247427, y: 0.5190254, z: 5.744798}
   m_Children: []
-  m_Father: {fileID: 1527549843}
-  m_RootOrder: 3
+  m_Father: {fileID: 1777399539}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &499428149
 SpriteRenderer:
@@ -528,7 +531,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 499428147}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -603,6 +606,9 @@ MonoBehaviour:
   gameManagerObj: {fileID: 0}
   MusicObj: {fileID: 0}
   FanObj: {fileID: 0}
+  soundVolume: 1
+  musicVolume: 1
+  controlsSound: 1
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,7 +806,7 @@ Transform:
   - {fileID: 1421003832}
   - {fileID: 2087437544}
   m_Father: {fileID: 1777399539}
-  m_RootOrder: 2
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &569742170
 GameObject:
@@ -1373,7 +1379,7 @@ Transform:
   m_LocalScale: {x: 4.356817, y: 3.00201, z: 3.00201}
   m_Children: []
   m_Father: {fileID: 1527549843}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &794464735
 SpriteRenderer:
@@ -1669,7 +1675,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 836492162}
   kubi: {fileID: 8300000, guid: 8aa3cf1d48102d843b6e21192a78e51b, type: 3}
-  vibe: {fileID: 8300000, guid: 23c48260bc47edb49a124709c1efd1b4, type: 3}
+  vibe: {fileID: 8300000, guid: d4e82145ff6489b429626960312d7e15, type: 3}
 --- !u!82 &836492162
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1680,7 +1686,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 23c48260bc47edb49a124709c1efd1b4, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d4e82145ff6489b429626960312d7e15, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2735,7 +2741,7 @@ Transform:
   m_LocalScale: {x: 4.356817, y: 3.00201, z: 3.00201}
   m_Children: []
   m_Father: {fileID: 1527549843}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1110327631
 SpriteRenderer:
@@ -3030,7 +3036,7 @@ Transform:
   m_LocalScale: {x: 4.356817, y: 3.00201, z: 3.00201}
   m_Children: []
   m_Father: {fileID: 1527549843}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1172224919
 SpriteRenderer:
@@ -3499,7 +3505,7 @@ Transform:
   m_LocalScale: {x: 0.07493234, y: 0.09034703, z: 1}
   m_Children: []
   m_Father: {fileID: 1777399539}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1296066483
 GameObject:
@@ -4461,7 +4467,7 @@ Transform:
   m_LocalScale: {x: 4.356817, y: 3.00201, z: 3.00201}
   m_Children: []
   m_Father: {fileID: 1527549843}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1485206370
 SpriteRenderer:
@@ -4732,7 +4738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1527549843
 Transform:
   m_ObjectHideFlags: 0
@@ -4746,15 +4752,13 @@ Transform:
   m_Children:
   - {fileID: 727663308}
   - {fileID: 201065537}
-  - {fileID: 224284289}
-  - {fileID: 499428148}
   - {fileID: 1172224918}
   - {fileID: 794464734}
   - {fileID: 1110327630}
   - {fileID: 1485206369}
   - {fileID: 1913086786}
   m_Father: {fileID: 1777399539}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1568239411
 GameObject:
@@ -5425,6 +5429,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdcd6057fa51a2e4e88a26dcc1b88697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MusicManager: {fileID: 224284288}
+  SoundManager: {fileID: 499428147}
   mainMenu: {fileID: 2099598456}
   optionMenu: {fileID: 1527549842}
   gameMenu: {fileID: 567790039}
@@ -5437,6 +5443,8 @@ MonoBehaviour:
   buttonClickClip: {fileID: 8300000, guid: 65c7a8bf1d0a80f49a947f8a3621f191, type: 3}
   loadingClip: {fileID: 8300000, guid: fe25017e3100a174b84a38076fdc4aea, type: 3}
   hackingEntered: {fileID: 0}
+  audioChange: 0
+  MusicObj: {fileID: 0}
   responseText: {fileID: 1243901666}
   informationBoxText: {fileID: 1763417360}
   writenCodeInput: {fileID: 912823382}
@@ -6027,6 +6035,8 @@ Transform:
   m_LocalScale: {x: 13.345372, y: 11.068432, z: 1}
   m_Children:
   - {fileID: 2099598457}
+  - {fileID: 224284289}
+  - {fileID: 499428148}
   - {fileID: 1527549843}
   - {fileID: 567790040}
   - {fileID: 1262725259}
@@ -6271,7 +6281,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1702888870}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: changeSceneToGameMenu
+        m_MethodName: changeSceneToGameMenuTwo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6368,7 +6378,7 @@ Transform:
   m_LocalScale: {x: 8.337425, y: 5.744798, z: 5.744798}
   m_Children: []
   m_Father: {fileID: 1527549843}
-  m_RootOrder: 8
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1913086787
 BoxCollider2D:
@@ -6689,7 +6699,7 @@ Transform:
   - {fileID: 1856775362}
   - {fileID: 1081614660}
   m_Father: {fileID: 1777399539}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2087437543
 GameObject:

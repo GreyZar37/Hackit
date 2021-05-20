@@ -7,6 +7,8 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject MusicManager;
+    public GameObject SoundManager;
 
     public GameObject mainMenu;
     public GameObject optionMenu;
@@ -16,13 +18,16 @@ public class GameManager : MonoBehaviour
     public GameObject gamePlayObj;
     public GameObject alarmClock;
 
+
     public  AudioSource audioSource;
     public  AudioClip buttonChangeClip;
     public  AudioClip buttonClickClip;
     public  AudioClip loadingClip;
     public  AudioClip hackingEntered;
-    
 
+    public bool audioChange;
+
+    public GameObject MusicObj;
 
     public TMP_Text responseText;
 
@@ -156,12 +161,29 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-       
+
+        money = PlayerPrefs.GetInt("Money", 0);
+        MusicManager.GetComponent<SFXManager>().musicVolume = PlayerPrefs.GetFloat("musicVolume", 1f);
+        MusicManager.GetComponent<SFXManager>().index = PlayerPrefs.GetInt("MusicIndex", 10);
+        SoundManager.GetComponent<SFXManager>().soundVolume = PlayerPrefs.GetFloat("soundVolume", 1f);
+        SoundManager.GetComponent<SFXManager>().index = PlayerPrefs.GetInt("SoundIndex", 10);
+
+        SoundManager.GetComponent<SFXManager>().updateUI();
+        MusicManager.GetComponent<SFXManager>().updateUI();
+
+        MusicObj = GameObject.FindGameObjectWithTag("MusicObj");
     }
 
     void Update()
     {
-       
+        PlayerPrefs.SetFloat("musicVolume", MusicManager.GetComponent<SFXManager>().musicVolume);
+        PlayerPrefs.SetFloat("soundVolume", SoundManager.GetComponent<SFXManager>().soundVolume);
+        PlayerPrefs.SetInt("MusicIndex", MusicManager.GetComponent<SFXManager>().index);
+        PlayerPrefs.SetInt("SoundIndex", SoundManager.GetComponent<SFXManager>().index);
+
+
+        PlayerPrefs.SetInt("Money", money);
+
         restartMethod();
 
         timeAndDetection();
@@ -255,7 +277,7 @@ public class GameManager : MonoBehaviour
                     }
 
                     fullText = "<<NOW IT IS TIME TO HACK IT<<\n\n" + "<<PRESS THE SAME BUTTONS AS SHOWN IN THE CONSOLE<<\n\n" + arrowDirection.ToUpper() + "\n\n";
-                    delayCurrentTime = 0.5f;
+                    delayCurrentTime = 1f;
                     StartCoroutine("ShowText");
 
                     currentCode = "";
@@ -381,6 +403,13 @@ public class GameManager : MonoBehaviour
 
                     case hackit:
 
+
+                        MusicObj.GetComponent<AudioSource>().clip = (MusicObj.GetComponent<Music>().kubi);
+                        MusicObj.GetComponent<AudioSource>().Play();
+
+
+
+
                         responseText.text = "";
 
                         if (firstTime == true)
@@ -410,7 +439,7 @@ public class GameManager : MonoBehaviour
 
                     default:
 
-                        delayCurrentTime = 0.5f;
+                        delayCurrentTime = 1f;
                         fullText = "<<Error wrong code input>>\n\n";
                         StartCoroutine("ShowText");
                         currentCode = "";
@@ -459,7 +488,7 @@ public class GameManager : MonoBehaviour
                     case securityScan:
 
                         fullText = "<<!!ERROR SCAN FAILD!!>>\n\n";
-                        delayCurrentTime = 0.5f;
+                        delayCurrentTime = 1f;
                         StartCoroutine("ShowText");
                         currentCode = "";
 
@@ -475,7 +504,7 @@ public class GameManager : MonoBehaviour
                         else
                         {
                             fullText = ">>!!!ALREADY HACKED>>!!!\n\n";
-                            delayCurrentTime = 0.5f;
+                            delayCurrentTime = 1f;
                             StartCoroutine("ShowText");
                             currentCode = "";
                         }
@@ -495,7 +524,7 @@ public class GameManager : MonoBehaviour
                     case hackit:
 
                         fullText = ">>!!!ALREADY ENTERED>>!!!\n\n";
-                        delayCurrentTime = 0.5f;
+                        delayCurrentTime = 1f;
                         StartCoroutine("ShowText");
                         currentCode = "";
 
@@ -504,7 +533,7 @@ public class GameManager : MonoBehaviour
 
                     default:
 
-                        delayCurrentTime = 0.5f;
+                        delayCurrentTime = 1f;
                         fullText = "<<ERROR NOTHING FOUND!!!>>\n\n";
                         StartCoroutine("ShowText");
                         currentCode = "";
@@ -527,12 +556,18 @@ public class GameManager : MonoBehaviour
     {
         mainMenu.SetActive(false);
         optionMenu.SetActive(true);
+        SoundManager.GetComponent<SpriteRenderer>().enabled = true;
+        MusicManager.GetComponent<SpriteRenderer>().enabled = true;
+
     }
     public void changeSceneToMainMenu()
     {
         mainMenu.SetActive(true);
         optionMenu.SetActive(false);
         gameMenu.SetActive(false);
+
+        SoundManager.GetComponent<SpriteRenderer>().enabled = false;
+        MusicManager.GetComponent<SpriteRenderer>().enabled = false;
     }
     public void changeSceneToMissonsMenu()
     {
@@ -548,10 +583,18 @@ public class GameManager : MonoBehaviour
     public void changeSceneToGameMenu()
     {
         shopMenu.SetActive(false);
-       
+        
         missionsMenu.SetActive(false);
         mainMenu.SetActive(false);
     }
+    public void changeSceneToGameMenuTwo()
+    {
+        shopMenu.SetActive(false);
+        gameMenu.SetActive(true);
+        missionsMenu.SetActive(false);
+        mainMenu.SetActive(false);
+    }
+
 
     public void quit()
     {
@@ -560,11 +603,19 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ShowText()
     {
-        for(int i = 0; i < fullText.Length; i++)
+        for (int i = 0; i < fullText.Length; i++)
         {
             responseText.text += fullText[i];
-                 
-            yield return new WaitForSeconds(delay);
+
+            for (float t = 0.0f; t < delay; t += Time.deltaTime)
+            {
+                if (t >= delay)
+                {
+                    yield return null;
+                }
+                yield return null;
+            }
+
         }
     }
 
@@ -572,10 +623,17 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < fullTextTwo.Length; i++)
         {
-                informationBoxText.text += fullTextTwo[i];
-            
+            informationBoxText.text += fullTextTwo[i];
 
-                yield return new WaitForSeconds(delay);
+            for (float t = 0.0f; t < delay; t += Time.deltaTime)
+            {
+                if (t >= delay)
+                {
+                    yield return null;
+                }
+                yield return null;
+            }
+
         }
     }
 
@@ -782,7 +840,7 @@ public class GameManager : MonoBehaviour
         }
 
         fullText = arrowDirection.ToUpper() + "\n" + "<ARROWS REMAINING:" + arrowsLeft + "\n\n";
-
+        delayCurrentTime = 0.4f;
         StartCoroutine("ShowText");
         currentCode = "";
       
@@ -885,7 +943,7 @@ public class GameManager : MonoBehaviour
     {
         responseText.text = "";
         fullText = "STOP HACKING NOW WITH 50% SECURITY HACKED OR HACK TO 100%\n\n" + "50%()\n" + "100%()\n\n";
-        delayCurrentTime = 0.5f;
+        delayCurrentTime = 1f;
         StartCoroutine("ShowText");
     }
     public void dataSteal()
@@ -920,7 +978,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 fullText = ">>!!ERROR DATA ALREADY STOLEN>>!!\n\n";
-                delayCurrentTime = 0.5f;
+                delayCurrentTime = 1f;
                 StartCoroutine("ShowText");
             }
         }
@@ -929,14 +987,14 @@ public class GameManager : MonoBehaviour
             money += moneyToGive;
             responseText.text = "";
             fullText = "TRANSFERRING: " + moneyToGive + "$ TO YOUR ACCOUNT\n\nTYPE  " + leaveMission + "  TO LEAVE THE MISSION\n\n";
-            delayCurrentTime = 0.5f;
+            delayCurrentTime = 1f;
             StartCoroutine("ShowText");
             dataStolen = true;
         }
         else
         {
             fullText = ">>!!ERROR CAN'T STEAL DATA>>!!\n\n";
-            delayCurrentTime = 0.5f;
+            delayCurrentTime = 1f;
             StartCoroutine("ShowText");
         }
 
@@ -975,7 +1033,11 @@ public class GameManager : MonoBehaviour
 
             mainInterfaceActive = true;
 
-            responseText.text = "";
+        MusicObj.GetComponent<AudioSource>().clip = (MusicObj.GetComponent<Music>().vibe);
+        MusicObj.GetComponent<AudioSource>().Play();
+
+
+       responseText.text = "";
             currentCode = "";
             fullText = "";
         
@@ -1009,6 +1071,12 @@ public class GameManager : MonoBehaviour
 
         mainInterfaceActive = true;
 
+
+        MusicObj.GetComponent<AudioSource>().clip = (MusicObj.GetComponent<Music>().vibe);
+        MusicObj.GetComponent<AudioSource>().Play();
+
+
+
         responseText.text = "";
         currentCode = "";
         fullText = "";
@@ -1041,6 +1109,12 @@ public class GameManager : MonoBehaviour
         responseText.text = "";
         currentCode = "";
         fullText = "";
+
+
+
+        MusicObj.GetComponent<AudioSource>().clip = (MusicObj.GetComponent<Music>().vibe);
+        MusicObj.GetComponent<AudioSource>().Play();
+
 
         switch (mission)
         {
@@ -1161,13 +1235,13 @@ public class GameManager : MonoBehaviour
     }
     void controlRestriction()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl) && textDone == true || Input.GetKeyDown(KeyCode.RightControl) && textDone == true)
+        if (Input.GetKeyDown(KeyCode.LeftControl) && textDone == true && gamePlayObj.activeInHierarchy == true || Input.GetKeyDown(KeyCode.RightControl) && textDone == true && gamePlayObj.activeInHierarchy == true)
         {
             writenCodeInput.text = "";
             currentCode = "";
 
-            fullTextTwo = "Error <<< No permission to use control<<<\n\n";
-            delayCurrentTime = 0.5f;
+            fullText = "Error <<< No permission to use control<<<\n\n";
+            delayCurrentTime = 1f;
             StartCoroutine("ShowTextInfoBox");
         }
     }
